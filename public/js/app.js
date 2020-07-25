@@ -1944,6 +1944,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      tasks: {}
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.get('http://127.0.0.1:8000/tasksList').then(function (response) {
+      return _this.tasks = response.data;
+    })["catch"](function (error) {
+      return console.log(error);
+    });
+  },
   mounted: function mounted() {
     console.log('Component mounted.');
   }
@@ -37576,26 +37590,20 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container mt-2" }, [
+    _c(
+      "ul",
+      { staticClass: "list-group" },
+      _vm._l(_vm.tasks, function(task) {
+        return _c("li", { key: task.id, staticClass: "list-group-item" }, [
+          _c("a", { attrs: { href: "#" } }, [_vm._v(_vm._s(task.name))])
+        ])
+      }),
+      0
+    )
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("ul", { staticClass: "list-group" }, [
-        _c("li", { staticClass: "list-group-item" }, [_vm._v("Tache 2")]),
-        _vm._v(" "),
-        _c("li", { staticClass: "list-group-item" }, [_vm._v("Tache 2")]),
-        _vm._v(" "),
-        _c("li", { staticClass: "list-group-item" }, [_vm._v("Tache 3")]),
-        _vm._v(" "),
-        _c("li", { staticClass: "list-group-item" }, [_vm._v("Tache 4")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -52827,7 +52835,6 @@ var routes = [{
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   routes: routes
 });
-Vue.component('home-component', __webpack_require__(/*! ./components/HomeComponent */ "./resources/js/components/HomeComponent.vue")["default"]);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

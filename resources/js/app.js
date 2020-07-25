@@ -26,7 +26,6 @@ const routes = [
 
 const router = new VueRouter({routes});
 
-Vue.component('home-component', require('./components/HomeComponent').default);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
