@@ -40,8 +40,7 @@ class TaskController extends Controller
     {
        $task = Task::create($request->all());
        if ($task){
-         $tasks = Task::orderBy('created_at', ' DESC')->paginate(3);
-         return response()->json($tasks);
+         return $task->refresh();
        }
     }
 
@@ -59,12 +58,13 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return JsonResponse
      */
     public function edit($id)
     {
-        //
+        $tasks = Task::find($id);
+        return response()->json($tasks);
     }
 
     /**
@@ -72,11 +72,16 @@ class TaskController extends Controller
      *
      * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        //
+        $task = Task::find($id);
+        $task->name = request('name');
+        $task->save();
+        if($task){
+            return $task->refresh();
+        }
     }
 
     /**
