@@ -88,10 +88,17 @@ class TaskController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function destroy($id)
     {
-        //
+       $task = Task::find($id);
+
+       if($task->delete()){
+          return $task->refresh();
+       }else{
+           return response()->json(['error' =>'Destroy method has failed .'], 425);
+       }
+
     }
 }

@@ -4,9 +4,15 @@
         <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center" v-for="task in tasks.data" :key="task.id">
                 <a href="#">{{ task.name }}</a>
-                <button @click="getTask(task.id)" type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editModal">
-                    Editer
+                <div>
+                    <button @click="getTask(task.id)" type="button" class="btn btn-warning btn-sm m2" data-toggle="modal" data-target="#editModal">
+                        Editer
+                    </button>
+                    <button @click="deleteTask(task.id)" type="button" class="btn btn-danger btn-sm" >
+                    supprimer
                 </button>
+                </div>
+
             </li>
             <edit-task v-bind:taskToEdit="taskToEdit" @task-updated="refresh"></edit-task>
         </ul>
@@ -29,6 +35,7 @@
                 .then(response => (this.tasks = response.data))
                 .catch(error => console.log(error))
         },
+
         methods:{
             getResults(page = 1) {
                 axios.get('http://127.0.0.1:8000/tasksList?page=' + page)
@@ -37,15 +44,21 @@
                     });
             },
 
+            deleteTask(id){
+                axios.delete('http://127.0.0.1:8000/tasks/delete/'+id)
+                .then(response => this.tasks = response.data)
+                .catch(error => console.log(error));
+            },
+
+            refresh(tasks){
+                this.tasks = tasks.data
+            },
             getTask(id){
                 axios.get('http://127.0.0.1:8000/tasksList/edit/'+id)
                 .then(response => (this.taskToEdit = response.data))
                 .catch(error => console.log(error))
             },
 
-            refresh(tasks){
-                this.tasks = tasks.data
-            }
         },
 
         mounted() {
