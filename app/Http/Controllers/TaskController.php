@@ -12,12 +12,17 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Task $tasks
      * @return JsonResponse
      */
-    public function index()
+    public function index(Task $tasks)
     {
-        $tasks = Task::orderBy('created_at', 'DESC')->paginate(3);
-        return response()->json($tasks);
+        if(request('q')!== null){
+           $tasks['data'] = Task::where('name', 'like', '%' . request('q'). '%')->get();
+            return response()->json($tasks);
+        }else{
+            return $tasks->refresh();
+        }
     }
 
     /**

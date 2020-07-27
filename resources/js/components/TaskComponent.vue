@@ -1,5 +1,8 @@
 <template>
     <div class="container mt-2">
+        <div class="form-group">
+            <input @keyup="searchTask" v-model="q" type="text" class="form-control" placeholder="Rechercher une tâche" id="inputDefault" >
+        </div>
         <add-task @task-added="refresh"></add-task>
         <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center" v-for="task in tasks.data" :key="task.id">
@@ -27,7 +30,8 @@
         data(){
             return {
                 tasks: {},
-                taskToEdit: ''
+                taskToEdit: '',
+                q: ''
             }
         },
         created() {
@@ -42,6 +46,18 @@
                     .then(response => {
                         (this.tasks = response.data);
                     });
+            },
+
+            searchTask(){
+                if (this.q.length > 3){
+                    axios.get('http://127.0.0.1:8000/tasksList/' + this.q)
+                        .then(response => (this.tasks = response.data))
+                        .catch(error => console.log(error))
+                }else{
+                    axios.get('http://127.0.0.1:8000/tasksList')
+                        .then(response => (this.tasks = response.data))
+                        .catch(error => console.log(error))
+                }
             },
 
             deleteTask(id){

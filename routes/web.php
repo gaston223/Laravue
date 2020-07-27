@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/tasksList', 'TaskController@index');
+Route::get('/tasksList/{q?}', 'TaskController@index');
 Route::post('/tasksList', 'TaskController@store');
 Route::get('/tasksList/edit/{id}', 'TaskController@edit');
 Route::patch('/tasksList/update/{id}', 'TaskController@update');

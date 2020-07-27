@@ -10,6 +10,7 @@ class Task extends Model
 
     public function refresh()
     {
+
         $tasks = Task::orderBy('created_at', 'DESC')->paginate(3);
         return response()->json($tasks);
     }
