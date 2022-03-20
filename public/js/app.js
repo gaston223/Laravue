@@ -38416,7 +38416,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-success",
-                  attrs: { type: "submit" },
+                  attrs: { type: "submit", "data-dismiss": "modal" },
                   on: { click: _vm.storeTask }
                 },
                 [_vm._v("Créer ma tâche")]

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -105,5 +106,18 @@ class TaskController extends Controller
            return response()->json(['error' =>'Destroy method has failed .'], 425);
        }
 
+    }
+
+    /**
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function tasks(): JsonResponse
+    {
+        $tasks = Task::all();
+        //throw new \Exception('Test Exception 2');
+
+        dd($tasks);
+        return response()->json($tasks);
     }
 }
